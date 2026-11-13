@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BurnLab</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--tx:#1c2430;--mu:#7a8596;--ln:#eceff3;--ac:#0d9488;--ac2:#ccfbf1;--tr:#e6eaef;--sh:0 1px 2px #1c243010,0 8px 24px #1c24300a;--c1:#3b82f6;--c2:#0d9488;--c3:#f59e0b;--c4:#8b5cf6}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1319;--card:#171e27;--tx:#e9eef5;--mu:#8793a4;--ln:#232c38;--ac:#2dd4bf;--ac2:#12332f;--tr:#27313e;--sh:none}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Noto Sans Thai',system-ui,sans-serif;line-height:1.6;padding:max(16px,env(safe-area-inset-top)) 16px 90px}
+.w{max-width:600px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 16px}
+.top h1{margin:0;font-size:1.25rem;font-weight:700}
+.sw{display:flex;background:var(--tr);border-radius:99px;padding:3px}
+.sw button{padding:5px 16px;border-radius:99px;background:none;color:var(--mu);font-size:.85rem;font-weight:600;transition:.15s}
+.sw button.on{background:var(--card);color:var(--tx);box-shadow:var(--sh)}
+.card{background:var(--card);border-radius:24px;box-shadow:var(--sh)}
+.hero{padding:22px;display:flex;gap:22px;align-items:center}
+.ring{position:relative;width:128px;height:128px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9;stroke-linecap:round}
+.ring .bg{stroke:var(--tr)}.ring .fg{stroke:var(--ac);stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset .6s}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:1.9rem;font-weight:700}
+.hi h2{margin:0;font-size:1.9rem;font-weight:700;line-height:1.2}.hi h2 small{font-size:1rem;color:var(--mu);font-weight:500}
+.hi p{margin:4px 0 14px;color:var(--mu);font-size:.95rem}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border:0}
+.pri{background:var(--ac);color:#fff;font-weight:600;border-radius:12px;padding:8px 16px}
+@media(prefers-color-scheme:dark){.pri{color:#06201c}}
+.sec{background:var(--tr);color:var(--tx);font-weight:500;border-radius:12px;padding:8px 14px;font-size:.9rem}
+button:focus-visible,a:focus-visible,.row:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.mt{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.mt div{background:var(--card);border-radius:18px;padding:12px;box-shadow:var(--sh)}
+.mt span{font-size:.78rem;color:var(--mu)}.mt b{display:block;font-size:1.25rem;font-weight:700}
+.mt i{display:block;height:4px;border-radius:9px;background:var(--tr);margin-top:6px;overflow:hidden}.mt i u{display:block;height:100%;border-radius:9px;transition:width .5s}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin:18px -16px 4px;padding:2px 16px 8px;scrollbar-width:none}
+.tabs button{white-space:nowrap;background:var(--card);color:var(--mu);padding:7px 15px;border-radius:99px;font-size:.88rem;font-weight:500;box-shadow:var(--sh)}
+.tabs button.on{background:var(--tx);color:var(--bg)}
+.g{margin:16px 0}
+.g h3{margin:0 4px 2px;font-size:1rem;font-weight:600}.g>p{margin:0 4px 10px;color:var(--mu);font-size:.88rem}
+.list{overflow:hidden}
+.it{border-bottom:1px solid var(--ln)}.it:last-child{border:0}
+.row{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer}
+.ck{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--tr);background:none;display:grid;place-items:center;padding:0;transition:.15s}
+.ck svg{width:15px;height:15px;stroke:#fff;stroke-width:3.5;fill:none;opacity:0}
+.done .ck{background:var(--ac);border-color:var(--ac)}.done .ck svg{opacity:1}
+@media(prefers-color-scheme:dark){.done .ck svg{stroke:#06201c}}
+.tt{flex:1;min-width:0}.tt b{font-weight:600}.tt p{margin:0;color:var(--mu);font-size:.88rem;line-height:1.45}
+.pc{font-weight:600;color:var(--mu);font-variant-numeric:tabular-nums}.done .pc{color:var(--ac)}
+.dt{display:none;padding:0 18px 16px 60px}.open .dt{display:block}
+.m{display:grid;grid-template-columns:72px 1fr 84px;gap:10px;align-items:center;margin:6px 0;font-size:.84rem;color:var(--mu)}
+.m .tr{height:6px;background:var(--tr);border-radius:9px;overflow:hidden}.m .tr u{display:block;height:100%;border-radius:9px}
+.m em{font-style:normal;text-align:right}.m em s{text-decoration:none;color:var(--ac);font-weight:600}
+.gd{margin:12px 0;padding:6px 20px 8px}
+.gd summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 0;cursor:pointer;font-weight:700;font-size:1.05rem}
+.gd summary::-webkit-details-marker{display:none}
+.gd summary:after{content:"";width:9px;height:9px;border-right:2px solid var(--mu);border-bottom:2px solid var(--mu);transform:rotate(45deg);transition:.2s;margin-right:4px}
+.gd[open] summary:after{transform:rotate(-135deg)}
+.gd .sw{display:inline-flex;margin-bottom:14px}
+.gd ol{list-style:none;margin:0;padding:0}
+.gd li{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--ln)}
+.gd li>i{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ac2);color:var(--ac);font-style:normal;font-weight:700;font-size:.85rem;display:grid;place-items:center}
+.gd li b{display:block;font-weight:600}.gd li p{margin:0;color:var(--mu);font-size:.9rem;line-height:1.5}
+.vl{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.vl div{flex:1;min-width:92px;background:var(--bg);border-radius:14px;padding:10px 12px}
+.vl span{font-size:.75rem;color:var(--mu);display:block}.vl b{font-size:1.05rem}
+.wn{background:#fef3c7;color:#78350f;border-radius:14px;padding:12px 14px;font-size:.88rem;margin:12px 0 10px}
+.wn b{display:block;margin-bottom:2px}.wn ul{margin:4px 0 0;padding-left:18px}
+@media(prefers-color-scheme:dark){.wn{background:#33280f;color:#fcd9a0}}
+.vol{display:inline-block;margin-left:8px;font-size:.75rem;font-weight:600;color:var(--ac);background:var(--ac2);padding:1px 10px;border-radius:99px;vertical-align:2px}
+.note{color:var(--mu);font-size:.8rem;text-align:center;margin-top:24px;padding:0 10px}
+@media(max-width:430px){.hero{flex-direction:column;align-items:flex-start}.mt{grid-template-columns:repeat(2,1fr)}.dt{padding-left:18px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="top"><h1>BurnLab</h1><div class="sw" id="sw" role="group" aria-label="เลือกเป้าหมาย"><button data-t="50">50 ชม.</button><button data-t="100">100 ชม.</button></div></div>
+<section class="card hero">
+  <div class="ring"><svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="fg" cx="60" cy="60" r="52"/></svg><b id="pc">0%</b></div>
+  <div class="hi"><h2><span id="n">0</span> / <span id="tt"></span> <small>ชม.</small></h2><p id="left"></p>
+  <div class="btns"><button class="pri" id="nx">ติ๊กชั่วโมงถัดไป</button><button class="sec" id="ex">ขยายทั้งหมด</button><button class="sec" id="rs">รีเซ็ต</button></div></div>
+</section>
+<div class="mt" id="mt"></div>
+<details class="card gd" open><summary>วิธีเบิร์นให้ถูกวิธี</summary>
+<div class="sw" id="gs"><button data-g="h" class="on">หูฟัง</button><button data-g="s">ลำโพง</button></div>
+<div class="vl" id="vl"></div>
+<ol id="steps"></ol>
+<div class="wn"><b>ข้อควรระวัง</b><ul id="wn"></ul></div>
+</details>
+<nav class="tabs" id="tabs"></nav>
+<main id="list"></main>
+<p class="note">ตัวเลขเป็นค่าประมาณจากประสบการณ์ผู้ใช้ทั่วไป ผลจริงต่างกันตามรุ่นหูฟัง และส่วนหนึ่งเกิดจากหูที่ปรับตัวด้วย ฟังที่ระดับเสียงปานกลาง ความคืบหน้าของแต่ละเป้าหมายถูกบันทึกแยกกันในเบราว์เซอร์เครื่องนี้</p>
+</div>
+<script>
+let T,KEY,E,st=[],all=false;
+const M=[['เบส','--c1'],['เสียงกลาง','--c2'],['แหลม','--c3'],['ซาวด์สเตจ','--c4']];
+const ENDS={50:[3,8,15,25,38,50],100:[5,15,30,50,75,100]};
+const V=[[20,15,15,10],[45,40,40,30],[65,60,60,55],[82,80,80,75],[94,93,92,90],[100,100,100,100]];
+const N=['เริ่มต้น','เริ่มคุ้นเคย','ปรับตัว','เข้าที่','เกือบสมบูรณ์','ช่วงสุดท้าย'];
+const D=['จดเสียงเบสและเสียงร้องไว้เป็นค่าอ้างอิง','สังเกตความแน่นของเบสและความชัดของเสียงร้อง','ไดรเวอร์เริ่มคลายตัว เสียงเริ่มสมดุล','ครึ่งทางแล้ว เสียงเริ่มนิ่งและสม่ำเสมอ','การเปลี่ยนแปลงเหลือน้อย เป็นการปรับละเอียด','เสียงเกือบนิ่ง ใกล้เสียงจริงของหูฟัง'];
+const Tp=[['ตั้งเพลงอ้างอิง 2–3 เพลง','เสียงอาจแน่นหรือแข็งเล็กน้อย','ยังเป็นเสียงใหม่'],['เบสเริ่มหนักแน่นขึ้น','เสียงร้องเริ่มนุ่มขึ้น','เทียบกับเพลงอ้างอิง'],['ซาวด์สเตจเริ่มกว้างขึ้น','เสียงแหลมเริ่มลื่น','ลองเพลงที่มีรายละเอียดเยอะ'],['แยกชิ้นเครื่องดนตรีชัดขึ้น','เบสลงลึกและหางเสียงเรียบ','ลองบันทึกเทียบกับตอนเริ่ม'],['ความต่างต่อชั่วโมงเล็กมาก','ลองฟังหลายแนวเพลง','มิติเสียงเริ่มคงที่'],['เทียบกับตอนเริ่มต้นดูภาพรวม','พอใจแล้วหยุดได้','เสียงเข้าที่แล้ว']];
+const $=s=>document.querySelector(s),css=v=>`var(${v})`;
+const VOL=['40–50%','40–50%','50–60%','50–60%','60–70%','60–70%'];
+const G={h:{vl:[['ระดับเสียงเริ่มต้น','40–50%'],['ระดับสูงสุด','ไม่เกิน 70%'],['เล่นต่อรอบ','6–8 ชม.']],
+steps:[['เตรียมหูฟัง','ปิด ANC, EQ และเอฟเฟกต์เสียงทั้งหมด วางหูฟังบนขาตั้งหรือกล่อง ไม่ต้องใส่หู ต่อสายหรือชาร์จให้พร้อม'],['จดค่าอ้างอิง','เลือกเพลงที่คุ้นหู 2–3 เพลง ฟังที่ระดับเสียงเดิมก่อนเริ่ม เพื่อเอาไว้เทียบทุกครั้งที่ครบช่วง'],['ตั้งระดับเสียง','ตั้งที่ 40–60% ของเครื่องเล่น หรือระดับที่ถอดหูฟังวางไว้แล้วยังได้ยินชัด แต่ไม่ดังจนเสียงแตก ค่อยๆ เพิ่มตามตัวเลขข้างหัวแต่ละช่วง'],['เลือกเสียงที่เล่น','เพลงหลายแนววนลูป มีทั้งเบส เสียงร้อง และแหลม หรือ pink noise ระดับเบา หลีกเลี่ยงเสียงกวาดความถี่ที่ดังๆ'],['เล่นต่อเนื่องแล้วพัก','เล่นครั้งละ 6–8 ชม. แล้วพัก 1–2 ชม. ไม่ต้องทำรวดเดียว ถ้าหูฟังไร้สายให้ต่อสายชาร์จไว้'],['ฟังเทียบเมื่อครบช่วง','ถอดมาฟังด้วยเพลงอ้างอิงเดิมที่ระดับเสียงเดิม สังเกตเบส เสียงร้อง แหลม และมิติเสียง']],
+wn:['ห้ามใส่หูฟังตอนเล่นเสียงทดสอบ','ห้ามเปิดเสียงเต็มหรือดังจนเสียงแตก','ถ้าหูฟังร้อน มีกลิ่น หรือเสียงเพี้ยนให้หยุดทันที']},
+s:{vl:[['ระดับเสียงเริ่มต้น','40–50%'],['ระดับสูงสุด','ไม่เกิน 70%'],['เล่นต่อรอบ','6–8 ชม.']],
+steps:[['เตรียมลำโพง','วางในที่โล่ง ห่างผนังและของที่บัง ให้อากาศถ่ายเท ปิด EQ, bass boost และโหมดเอฟเฟกต์ ต่อกับแอมป์หรือแหล่งเสียงให้เรียบร้อย'],['จดค่าอ้างอิง','ฟังเพลงที่คุ้นหู 2–3 เพลงจากตำแหน่งนั่งฟังประจำ ที่ระดับเสียงเดิม เพื่อเอาไว้เทียบ'],['ตั้งระดับเสียง','ตั้งให้ดังระดับพูดคุยในห้อง ประมาณ 40–60% ของแอมป์ ไม่ต้องดังมาก ค่อยๆ เพิ่มตามตัวเลขข้างหัวแต่ละช่วง'],['เลือกเสียงที่เล่น','เพลงหลายแนววนลูป เน้นเพลงที่มีเบสและเสียงกลาง หรือ pink noise ระดับพอดี หลีกเลี่ยงเสียงกวาดความถี่ต่ำที่ดัง'],['เล่นต่อเนื่องแล้วพัก','เล่นครั้งละ 6–8 ชม. แล้วพัก 1–2 ชม. ให้ไดรเวอร์และแอมป์ได้คลายความร้อน'],['ฟังเทียบเมื่อครบช่วง','ฟังด้วยเพลงอ้างอิงเดิมจากตำแหน่งเดิม ที่ระดับเสียงเดิม สังเกตเบส เสียงร้อง แหลม และซาวด์สเตจ']],
+wn:['ห้ามเปิดเสียงเต็มหรือดังจนเสียงแตก','ไม่ควรเปิดทิ้งไว้ตอนไม่มีคนอยู่ในบ้านและห้องปิดร้อน','คำนึงถึงเพื่อนบ้าน เด็ก และสัตว์เลี้ยงที่อยู่ใกล้']}};
+function guide(g){
+  document.querySelectorAll('#gs button').forEach(b=>b.classList.toggle('on',b.dataset.g===g));
+  $('#vl').innerHTML=G[g].vl.map(v=>`<div><span>${v[0]}</span><b>${v[1]}</b></div>`).join('');
+  $('#steps').innerHTML=G[g].steps.map((x,i)=>`<li><i>${i+1}</i><div><b>${x[0]}</b><p>${x[1]}</p></div></li>`).join('');
+  $('#wn').innerHTML=G[g].wn.map(x=>`<li>${x}</li>`).join('');
+  try{localStorage.setItem('burnin-guide',g)}catch(e){}
+}
+$('#gs').onclick=e=>{const b=e.target.closest('button');if(b)guide(b.dataset.g)};
+
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+function val(h){let ps=0,pv=[0,0,0,0];for(let k=0;k<6;k++){if(h<=E[k]){const f=(h-ps)/(E[k]-ps);return pv.map((v,i)=>v+(V[k][i]-v)*f)}ps=E[k];pv=V[k]}return pv}
+function build(){
+  let html='';
+  for(let k=0;k<6;k++){
+    const s=(k?E[k-1]:0)+1;
+    html+=`<section class="g" data-k="${k}"><h3>${N[k]} · ชม. ${s}–${E[k]}<span class="vol">เสียง ${VOL[k]}</span></h3><p>${D[k]}</p><div class="card list">`;
+    for(let h=s;h<=E[k];h++){
+      const a=val(h),b=val(h-1);
+      const rows=M.map((m,i)=>`<div class="m"><span>${m[0]}</span><div class="tr"><u style="width:${a[i].toFixed(0)}%;background:${css(m[1])}"></u></div><em>${a[i].toFixed(0)}% <s>+${(a[i]-b[i]).toFixed(1)}</s></em></div>`).join('');
+      html+=`<div class="it" data-h="${h}"><div class="row" tabindex="0"><button class="ck" aria-label="ติ๊กชั่วโมงที่ ${h}"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button><div class="tt"><b>ชั่วโมงที่ ${h}</b><p>${Tp[k][h%3]}</p></div><span class="pc">${Math.round(h*100/T)}%</span></div><div class="dt">${rows}</div></div>`;
+    }
+    html+='</div></section>';
+  }
+  $('#list').innerHTML=html;
+}
+function render(){
+  const n=st.reduce((a,b)=>a+b,0),p=Math.round(n*100/T),a=val(n);
+  $('#n').textContent=n;$('#tt').textContent=T;$('#pc').textContent=p+'%';
+  $('#left').textContent=n>=T?'ครบแล้ว เสียงเข้าที่เต็มที่':'เหลืออีก '+(T-n)+' ชม.';
+  $('#fg').style.strokeDashoffset=326.7*(1-n/T);
+  $('#mt').innerHTML=M.map((m,i)=>`<div><span>${m[0]}</span><b>${a[i].toFixed(0)}%</b><i><u style="width:${a[i]}%;background:${css(m[1])}"></u></i></div>`).join('');
+  document.querySelectorAll('.it').forEach(e=>e.classList.toggle('done',!!st[e.dataset.h-1]));
+}
+function load(t){
+  T=t;KEY='burnin'+T;E=ENDS[T];
+  try{st=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){st=[]}
+  if(!Array.isArray(st)||st.length!==T)st=Array(T).fill(0);
+  try{localStorage.setItem('burnin-mode',T)}catch(e){}
+  all=false;$('#ex').textContent='ขยายทั้งหมด';
+  document.querySelectorAll('#sw button').forEach(b=>b.classList.toggle('on',+b.dataset.t===T));
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k==='-1'));
+  build();render();
+}
+$('#tabs').innerHTML='<button class="on" data-k="-1">ทั้งหมด</button>'+N.map((n,k)=>`<button data-k="${k}">${n}</button>`).join('');
+$('#sw').onclick=e=>{const b=e.target.closest('button');if(b&&+b.dataset.t!==T)load(+b.dataset.t)};
+$('#list').addEventListener('click',e=>{const it=e.target.closest('.it');if(!it)return;
+  if(e.target.closest('.ck')){const i=it.dataset.h-1;st[i]=st[i]?0:1;save();render()}else it.classList.toggle('open')});
+$('#list').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('row')){e.preventDefault();e.target.parentNode.classList.toggle('open')}});
+$('#ex').onclick=()=>{all=!all;document.querySelectorAll('.it').forEach(e=>e.classList.toggle('open',all));$('#ex').textContent=all?'ย่อทั้งหมด':'ขยายทั้งหมด'};
+$('#nx').onclick=()=>{const i=st.indexOf(0);if(i>-1){st[i]=1;save();render();const el=document.querySelector(`.it[data-h="${i+1}"]`);el&&el.scrollIntoView({behavior:'smooth',block:'center'})}};
+$('#rs').onclick=()=>{if(confirm('รีเซ็ตความคืบหน้าของเป้าหมาย '+T+' ชม.?')){st=Array(T).fill(0);save();render()}};
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.g').forEach(x=>x.style.display=(b.dataset.k==='-1'||x.dataset.k===b.dataset.k)?'':'none')};
+let m0=100;try{m0=+localStorage.getItem('burnin-mode')===50?50:100}catch(e){}
+load(m0);
+let g0='h';try{g0=localStorage.getItem('burnin-guide')==='s'?'s':'h'}catch(e){}
+guide(g0);
+</script>
+</body>
+</html>
